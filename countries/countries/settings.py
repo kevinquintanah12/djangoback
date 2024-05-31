@@ -25,7 +25,7 @@ SECRET_KEY = '9i630bq-6kk50^qplr7+fmh_eu_qu-vko)$b(t0n=+ai(vvdpd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'restapi',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',  # O la dirección IP de tu servidor PostgreSQL
+        'HOST': '172.17.0.2',  # O la dirección IP de tu servidor PostgreSQL
         'PORT': '5432',        # Puerto por defecto de PostgreSQL
     }
 }
