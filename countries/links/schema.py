@@ -1,4 +1,3 @@
-
 import graphene
 from graphene_django import DjangoObjectType
 from users.schema import UserType
@@ -41,6 +40,7 @@ class CreateCountry(graphene.Mutation):
     capital = graphene.String()
     population = graphene.Int()
     language = graphene.String()
+    posted_by = graphene.Field(UserType)
 
     class Arguments:
         name = graphene.String()
@@ -51,12 +51,15 @@ class CreateCountry(graphene.Mutation):
 
     def mutate(self, info, name, capital, population, language):
         user = info.context.user or None
+        if user.is_anonymous:
+            raise Exception('Not logged in!')
 
         country = Country(
             name=name,
             capital=capital,
             population=population,
-            language=language
+            language=language,
+            posted_by=user
         )
         country.save()
 
@@ -65,7 +68,9 @@ class CreateCountry(graphene.Mutation):
             name=country.name,
             capital=country.capital,
             population=country.population,
-            language=country.language
+            language=country.language,
+            posted_by=country.posted_by
+
         )
 
 class CreateVote(graphene.Mutation):
@@ -96,5 +101,4 @@ class CreateVote(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     create_country = CreateCountry.Field()
     create_vote = CreateVote.Field()
-
 

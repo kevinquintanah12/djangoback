@@ -1,18 +1,24 @@
-# Usa una imagen base oficial de Python
-FROM python:3.9-slim
+# Use the official Python image as a base image
+FROM python:3.9
 
-# Establece el directorio de trabajo
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copia los archivos de requerimientos y los instala
-COPY requirements.txt requirements.txt
+# Install dependencies
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia el resto del código de la aplicación
+# Copy the project code into the container
 COPY . .
 
-# Expone el puerto en el que correrá Django
-EXPOSE 8000
 
-# Comando para correr la aplicación
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Install gunicorn
+RUN pip install gunicorn
+
+# Run gunicorn when the container starts
+CMD ["gunicorn", "countries.wsgi:application", "--bind", "0.0.0.0:8000"]
+

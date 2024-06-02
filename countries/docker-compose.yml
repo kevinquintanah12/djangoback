@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "9003:9003"
+    volumes:
+      - .:/app
+      - ./static:/static
+    command: gunicorn --chdir countries --bind :9003 countries.wsgi:application
+    environment:
+      - DEBUG=1
+      - ALLOWED_HOSTS=*

@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'countries.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'restapi',
+        'NAME': 'apirest',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': '172.17.0.2',  # O la dirección IP de tu servidor PostgreSQL
+        'HOST': '34.174.192.83',  # O la dirección IP de tu servidor PostgreSQL
         'PORT': '5432',        # Puerto por defecto de PostgreSQL
     }
 }
@@ -126,7 +126,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
 
 GRAPHENE = {
@@ -141,3 +140,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
+
+STATIC_URL = '/static/'
+STATIC_ROOT = '/path/to/static'
